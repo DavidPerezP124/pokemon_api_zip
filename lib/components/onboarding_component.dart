@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_api_zip/components/styles/text_styles.dart';
 
 import 'dot_indicator.dart';
 
@@ -66,20 +67,14 @@ class OnboardingComponentState extends State<OnboardingComponent> {
                     bottom: 10,
                     right: 10,
                     child: FlatButton(
-                      onPressed: () => handleNextPage(),
-                      child: Text(_nextText),
-                    ),
+                        onPressed: () => handleNextPage(),
+                        child: _whiteText(_nextText)),
                   ),
                   Positioned(
                     top: 10,
                     right: 10,
                     child: FlatButton(
-                        onPressed: () {
-                          setState(() {
-                            shown = true;
-                          });
-                        },
-                        child: Text("Skip")),
+                        onPressed: setShown, child: _whiteText("Skip")),
                   )
                 ],
               ),
@@ -87,11 +82,13 @@ class OnboardingComponentState extends State<OnboardingComponent> {
           );
   }
 
+  void setShown() => setState(() => shown = true);
+
   void handleNextPage() {
+    if (_nextText == "Begin") {
+      setShown();
+    }
     if (_controller.page == _pages.length - 1) {
-      setState(() {
-        _nextText = 'Begin';
-      });
       return null;
     }
     if (_controller.page == _pages.length - 2) {
@@ -101,6 +98,9 @@ class OnboardingComponentState extends State<OnboardingComponent> {
     }
     _controller.nextPage(duration: _kDuration, curve: _kCurve);
   }
+
+  Text _whiteText(String value) =>
+      Text(value, style: PokeStyles(context: context).whiteText);
 
   List<Widget> get _pages => <Widget>[
         new ConstrainedBox(
