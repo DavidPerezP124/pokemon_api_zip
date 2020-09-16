@@ -8,10 +8,14 @@
 ///```
 class Utilities {
   Utilities._();
+
   ///Names can only be alphanumeric (aAzZ, 0-9), with or without underscores and hyphens
   static String nameValidator(String value) {
     if (value.isEmpty) {
       return '*required';
+    }
+    if (value.contains(new RegExp(r'^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$'))) {
+      return 'cannot begin with special characters';
     }
     return null;
   }
@@ -29,7 +33,7 @@ class Utilities {
     if (!value.contains(new RegExp(r'(?=.*[A-Z])'))) {
       return 'must contain at least 1 uppercase';
     }
-    if (!value.contains(new RegExp(r'(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\])'))) {
+    if (value.contains(new RegExp(r'(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\])'))) {
       return 'must contain at least 1 special character';
     }
     if (!value.contains(new RegExp(r'.{8,12}$'))) {
