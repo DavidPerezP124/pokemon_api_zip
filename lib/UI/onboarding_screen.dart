@@ -8,7 +8,7 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      child: OnboardingComponent(),
+      child: Container(),
     );
   }
 }

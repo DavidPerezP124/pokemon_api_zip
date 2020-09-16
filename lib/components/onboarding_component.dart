@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_api_zip/components/styles/text_styles.dart';
+import 'package:pokemon_api_zip/providers/onboardingStatusProvider.dart';
 
 import 'dot_indicator.dart';
 
 class OnboardingComponent extends StatefulWidget {
+  final OnboardingStatus data;
+
+  const OnboardingComponent({Key key, @required this.data}) : super(key: key);
   @override
   State createState() => new OnboardingComponentState();
 }
@@ -23,6 +27,13 @@ class OnboardingComponentState extends State<OnboardingComponent> {
   @override
   void initState() {
     super.initState();
+    widget.data.isOnboarded((value) {
+      if (value != null && value == true) {
+        setState(() {
+          shown = true;
+        });
+      }
+    });
   }
 
   @override
@@ -67,14 +78,15 @@ class OnboardingComponentState extends State<OnboardingComponent> {
                     bottom: 10,
                     right: 10,
                     child: FlatButton(
-                        onPressed: () => handleNextPage(),
+                        onPressed: () => handleNextPage(widget.data),
                         child: _whiteText(_nextText)),
                   ),
                   Positioned(
                     top: 10,
                     right: 10,
                     child: FlatButton(
-                        onPressed: setShown, child: _whiteText("Skip")),
+                        onPressed: () => setShown(widget.data),
+                        child: _whiteText("Skip")),
                   )
                 ],
               ),
@@ -82,11 +94,14 @@ class OnboardingComponentState extends State<OnboardingComponent> {
           );
   }
 
-  void setShown() => setState(() => shown = true);
+  void setShown(OnboardingStatus data) {
+    setState(() => shown = true);
+    data.onboard();
+  }
 
-  void handleNextPage() {
+  void handleNextPage(OnboardingStatus data) {
     if (_nextText == "Begin") {
-      setShown();
+      setShown(data);
     }
     if (_controller.page == _pages.length - 1) {
       return null;
