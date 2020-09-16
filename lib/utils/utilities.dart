@@ -14,8 +14,16 @@ class Utilities {
     if (value.isEmpty) {
       return '*required';
     }
-    if (value.contains(new RegExp(r'^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$'))) {
-      return 'cannot begin with special characters';
+    if (!value.contains(new RegExp(r'^[a-zA-Z0-9_-]'))) {
+      return 'Only digits & letters allowed';
+    }
+    if (value.contains(new RegExp(
+        r'^\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s|\'
+        '|'))) {
+      return 'Permitted special characters are _ and -';
+    }
+    if (!value.contains(new RegExp(r'^.{4,18}$'))) {
+      return 'Must have between 4 and 18 characters';
     }
     return null;
   }
