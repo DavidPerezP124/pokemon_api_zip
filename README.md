@@ -6,6 +6,8 @@ This project is compatible with phones and tables.
 
 Since it's responsive it is also a responsive Progressive Web App.
 
+Demo availble in: [demo](https://pokemon_api_zip.codemagic.app/#/)
+
 ## Getting Started
 
 To  Install Flutter:
