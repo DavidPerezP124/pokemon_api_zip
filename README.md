@@ -12,6 +12,11 @@ To  Install Flutter:
 
 [Oficial Flutter Page](https://flutter.dev/docs/get-started/install)
 
+## Specs
+
+- Flutter beta channel
+- VSCode
+
 ## To clone this repo just paste this in your Terminal
 
 To run in a chrome browser (easiest setup)
@@ -42,7 +47,6 @@ flutter run
 
 You need a physical device or emulator.
 Select that device in your IDE before executing `flutter run` command
-
 
 ### Login
 

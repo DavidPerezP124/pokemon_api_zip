@@ -19,7 +19,7 @@ class OnboardingStatus with ChangeNotifier {
 
   isOnboarded(ValueSetter<bool> onboard) {
     _userData.getOnboarding().then((value) {
-      if (value != null) {
+      if (value == true) {
         onboard(value);
       }
     });
