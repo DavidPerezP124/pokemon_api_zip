@@ -8,7 +8,8 @@ main() {
   TestingService _tests;
   SharedPreferences _prefs;
   Map<String, dynamic> _kTestValues = {
-    "flutter.user": "{username':'testName','password':'testPass'}",
+    "flutter.username": 'testName',
+    'flutter.password': 'testPass',
     "flutter.onboarded": true
   };
   setUp(() async {
