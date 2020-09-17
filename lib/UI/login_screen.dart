@@ -19,8 +19,8 @@ class LoginScreen extends StatelessWidget {
           print(value.username);
         });
 
-        if (data.status == user.Status.Authenticated) {
-          print(data.status);
+        if (data.user != null) {
+          print(data.user);
           return HomeScreen(data: data);
         }
 

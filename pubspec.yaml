@@ -27,6 +27,8 @@ dependencies:
   google_fonts: ^1.1.0 # Eases use of any google font
   #Business Logic
   provider: ^4.3.2+2
+  #Http Calls
+  http: ^0.12.2
   #Local Data Persistance
   shared_preferences: ^0.5.10
   # The following adds the Cupertino Icons font to your application.

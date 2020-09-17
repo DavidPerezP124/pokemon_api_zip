@@ -1,4 +1,4 @@
-import 'package:pokemon_api_zip/models/userModel.dart';
+import 'package:pokemon_api_zip/models/user_model.dart';
 import 'package:pokemon_api_zip/protocols/onboarding_data_protocol.dart';
 import 'package:pokemon_api_zip/protocols/testing_protocols.dart';
 import 'package:pokemon_api_zip/protocols/user_data_protocol.dart';

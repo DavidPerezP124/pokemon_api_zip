@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pokemon_api_zip/models/userModel.dart';
+import 'package:pokemon_api_zip/models/user_model.dart';
 import 'package:pokemon_api_zip/persistance/persistance_service.dart';
 import 'package:pokemon_api_zip/protocols/testing_protocols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
