@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> implements HomeProtocol {
   @override
   void initState() {
     super.initState();
-    widget.network.setProtocol(this);
+    widget.network.setHomeProtocol(this);
   }
 
   List<Pokemon> randomList =

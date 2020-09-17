@@ -3,11 +3,14 @@ import 'dart:core';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokemon_api_zip/models/pokemon_details.dart';
 import 'package:pokemon_api_zip/models/pokemon_model.dart';
+import 'package:pokemon_api_zip/protocols/details_delegate.dart';
+import 'package:pokemon_api_zip/protocols/details_protocol.dart';
 import 'package:pokemon_api_zip/protocols/home_delegate.dart';
 import 'package:pokemon_api_zip/protocols/home_protocol.dart';
 
-class NetworkService implements HomeDelegate {
+class NetworkService implements HomeDelegate, DetailsDelegate {
   static String get _baseUrl => "https://pokeapi.co/api/v2/pokemon";
   // ignore: missing_return
   static Future<Map<String, dynamic>> _handleHttpCall(String api) async {
@@ -33,22 +36,43 @@ class NetworkService implements HomeDelegate {
         pList.add(Pokemon.fromJson(element as Map<String, dynamic>));
       });
       print(pList);
-      updateDelegate(pList);
+      updateHomeDelegate(pList);
     });
   }
 
   //Functions to update Home Screen
   @override
-  HomeProtocol delegate;
+  HomeProtocol homeDelegate;
 
   @override
-  setProtocol(HomeProtocol delegate) {
-    this.delegate = delegate;
+  setHomeProtocol(HomeProtocol delegate) {
+    this.homeDelegate = delegate;
     getLimited(100);
   }
 
   @override
-  updateDelegate(List<Pokemon> pokemonList) {
-    delegate.getPokemon(pokemonList);
+  updateHomeDelegate(List<Pokemon> pokemonList) {
+    homeDelegate.getPokemon(pokemonList);
+  }
+
+  @override
+  DetailsProtocol detailDelegate;
+
+  @override
+  setDetailProtocol(DetailsProtocol delegate) {
+    this.detailDelegate = delegate;
+  }
+
+  @override
+  updateDetailDelegate(PokemonDetails details) {
+    this.detailDelegate.getDetails(details);
+  }
+
+  @override
+  getPokemonDetails(int pokemon) {
+    _handleHttpCall("/$pokemon").then((value) {
+      PokemonDetails details = PokemonDetails.fromMap(value);
+      updateDetailDelegate(details);
+    });
   }
 }
