@@ -18,7 +18,6 @@ To run in a chrome browser (easiest setup)
 
 ```console
 git clone https://github.com/DavidPerezP124/pokemon_api_zip.git
-# To run this project
 cd pokemon_api_zip
 flutter run -d chrome
 ```
