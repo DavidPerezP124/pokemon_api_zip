@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pokemon_api_zip/models/user_model.dart';
-import 'package:pokemon_api_zip/persistance/persistance_service.dart';
+import 'package:pokemon_api_zip/persistance/persistence_service.dart';
 import 'package:pokemon_api_zip/protocols/testing_protocols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +16,7 @@ main() {
     SharedPreferences.setMockInitialValues(_kTestValues);
     _prefs = await SharedPreferences.getInstance();
   });
-  group("Persistance tests", () {
+  group("Persistence tests", () {
     test("Testing User Deserialization", () {
       UserModel model = _tests.testDeserialization(
           {"username": "testName", "password": "testPass"});

@@ -118,19 +118,29 @@ class OnboardingComponentState extends State<OnboardingComponent> {
       Text(value, style: PokeStyles(context: context).whiteText);
 
   List<Widget> get _pages => <Widget>[
-        new ConstrainedBox(
+        ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: new FlutterLogo(textColor: Colors.blue),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset("assets/images/pokedeex.png"),
+                Text(
+                    "Look at all the pokemon, from 1st Gen up to Sword & Shield")
+              ],
+            ),
+          ),
         ),
         new ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: new FlutterLogo(
-              style: FlutterLogoStyle.stacked, textColor: Colors.red),
-        ),
-        new ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: new FlutterLogo(
-              style: FlutterLogoStyle.horizontal, textColor: Colors.green),
-        ),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset("assets/images/pokedeex.png"),
+                Text(
+                    "Look at all the pokemon, from 1st Gen up to Sword & Shield")
+              ],
+            ),
+          ),
+        )
       ];
 }

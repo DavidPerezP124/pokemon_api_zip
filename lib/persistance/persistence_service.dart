@@ -42,12 +42,9 @@ class PersistData implements UserData, OnboardingData, TestingService {
   }
 
   UserModel _getUserInfo() {
-    String map = _preferences.getString("user");
-    var value = _makeMap(map);
-    if (value == null) {
-      return null;
-    }
-    return UserModel.fromJson(value);
+    String pass = _preferences.getString("password");
+    String user = _preferences.getString("username");
+    return UserModel.fromJson({"username": user, "password": pass});
   }
 
   Map<String, String> _makeMap(String map) {
@@ -55,7 +52,6 @@ class PersistData implements UserData, OnboardingData, TestingService {
     if (map == null) {
       return null;
     }
-    print(map);
     map.split(',').map((e) => nMap[e.split(":")[0]] = e.split(":")[1]);
     return nMap;
   }
@@ -84,6 +80,5 @@ class PersistData implements UserData, OnboardingData, TestingService {
   }
 
   @override
-  Map<String, String> testSerialization(dynamic data) {
-  }
+  Map<String, String> testSerialization(dynamic data) {}
 }

@@ -5,10 +5,11 @@ import 'package:provider/provider.dart';
 
 ///The login component containing text fields and login button
 class LoginComponent extends StatelessWidget {
-  LoginComponent({Key key}) : super(key: key);
+  LoginComponent({Key key, @required this.signIn}) : super(key: key);
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final ValueSetter<bool> signIn;
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
@@ -41,6 +42,7 @@ class LoginComponent extends StatelessWidget {
                               if (_formKey.currentState.validate()) {
                                 data.signIn(_nameController.text,
                                     _passwordController.text);
+                                signIn(true);
                               }
                             },
                             child: Text("Login"),
