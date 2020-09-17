@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_api_zip/models/userModel.dart';
 import 'package:pokemon_api_zip/providers/userStatusProvider.dart';
-import 'package:provider/provider.dart';
 
 import 'base_screen.dart';
 

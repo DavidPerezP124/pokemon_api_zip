@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:pokemon_api_zip/models/userModel.dart';
 import 'package:pokemon_api_zip/protocols/onboarding_data_protocol.dart';
 import 'package:pokemon_api_zip/protocols/testing_protocols.dart';
@@ -85,5 +84,6 @@ class PersistData implements UserData, OnboardingData, TestingService {
   }
 
   @override
-  Map<String, String> testSerialization(dynamic data) {}
+  Map<String, String> testSerialization(dynamic data) {
+  }
 }

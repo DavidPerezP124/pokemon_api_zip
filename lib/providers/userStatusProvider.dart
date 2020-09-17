@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_api_zip/models/userModel.dart';
-import 'package:pokemon_api_zip/persistance/persistance_service.dart';
 import 'package:pokemon_api_zip/protocols/user_data_protocol.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
