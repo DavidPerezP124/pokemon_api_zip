@@ -22,7 +22,7 @@ class NetworkService implements HomeDelegate {
       (Exception e) {
         print(e.toString());
       };
-    }
+    } finally {}
   }
 
   getLimited(int limit, {int offset = 100}) {
@@ -44,6 +44,7 @@ class NetworkService implements HomeDelegate {
   @override
   setProtocol(HomeProtocol delegate) {
     this.delegate = delegate;
+    getLimited(100);
   }
 
   @override

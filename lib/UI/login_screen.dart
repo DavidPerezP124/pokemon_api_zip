@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_api_zip/UI/base_screen.dart';
 import 'package:pokemon_api_zip/components/login_component.dart';
 import 'package:pokemon_api_zip/components/onboarding_component.dart';
+import 'package:pokemon_api_zip/network/network_layer.dart';
 import 'package:pokemon_api_zip/providers/onboardingStatusProvider.dart';
 import 'package:pokemon_api_zip/providers/userStatusProvider.dart' as user;
 import 'package:provider/provider.dart';
@@ -21,7 +22,11 @@ class LoginScreen extends StatelessWidget {
 
         if (data.user != null) {
           print(data.user);
-          return HomeScreen(data: data);
+          return Consumer<NetworkService>(
+              builder: (context, network, child) => HomeScreen(
+                    data: data,
+                    network: network,
+                  ));
         }
 
         return BaseScreen(
