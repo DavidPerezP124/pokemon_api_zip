@@ -32,8 +32,10 @@ class PersistData implements UserData, OnboardingData, TestingService {
     _useService(function: _saveUserInfo, argument: user);
   }
 
-  _saveUserInfo(UserModel user) =>
-      _preferences.setString("user", jsonEncode(user)).toString();
+  _saveUserInfo(UserModel user) {
+    _preferences.setString("username", user.username);
+    _preferences.setString("password", user.password);
+  }
 
   Future<UserModel> getUserInfo() async {
     return await _useService(function: _getUserInfo)
@@ -80,18 +82,6 @@ class PersistData implements UserData, OnboardingData, TestingService {
       return UserModel.fromJson(value);
     }
     return UserModel.fromJson(data);
-  }
-
-  @override
-  Future<UserModel> testRetrievingUser() async {
-    SharedPreferences.setMockInitialValues({
-      "flutter.user": "{username':'testName','password':'testPass'}",
-      "flutter.onboarded": true
-    });
-    var _prefs = await SharedPreferences.getInstance();
-    String map = _prefs.getString("user");
-    var value = _makeMap(map);
-    return UserModel.fromJson(value);
   }
 
   @override
