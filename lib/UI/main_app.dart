@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokemon_api_zip/network/network_layer.dart';
 import 'package:pokemon_api_zip/persistance/persistance_service.dart';
 import 'package:pokemon_api_zip/providers/onboardingStatusProvider.dart';
 import 'package:pokemon_api_zip/providers/userStatusProvider.dart';
@@ -16,7 +17,8 @@ class PokeApp extends StatelessWidget {
         ChangeNotifierProvider<UserStatus>.value(
             value: UserStatus.instance(_data)),
         ChangeNotifierProvider<OnboardingStatus>.value(
-            value: OnboardingStatus.instance(_data))
+            value: OnboardingStatus.instance(_data)),
+        Provider<NetworkService>(create:(context) => NetworkService())
       ],
       builder: (context, child) {
         return MaterialApp(
