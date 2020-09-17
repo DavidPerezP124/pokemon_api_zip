@@ -59,13 +59,47 @@ class PokemonCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(details.name),
-              ...details.abilities.map((e) => Text(e.ability.name)).toList(),
-              ...details.moves.map((e) => Text(e.move.name)).toList()
+              Image.network(
+                details.sprites.frontDefault,
+                height: 100,
+                fit: BoxFit.fitHeight,
+              ),
+              _group(context,
+                  groupTitle: "Name", children: [Text(details.name)]),
+              _group(context,
+                  groupTitle: "Abilitites",
+                  children: details.abilities
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(e.ability.name),
+                          ))
+                      .toList()),
+              _group(context,
+                  groupTitle: "Moves",
+                  children: details.moves
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(e.move.name),
+                          ))
+                      .toList()),
             ],
           ),
         ),
       ),
     );
   }
+
+  Text _titleText(BuildContext context, {String title}) =>
+      Text(title, style: Theme.of(context).textTheme.headline5);
+
+  Widget _group(BuildContext context,
+          {String groupTitle, List<Widget> children}) =>
+      Card(
+        child: Column(
+          children: [
+            _titleText(context, title: groupTitle),
+            ...children,
+          ],
+        ),
+      );
 }

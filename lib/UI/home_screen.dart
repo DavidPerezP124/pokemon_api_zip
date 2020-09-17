@@ -22,30 +22,45 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> implements HomeProtocol {
   UserModel user;
+  GlobalKey _componentKey = GlobalKey();
+  int _currentOffset = 0;
+  List<Pokemon> pokemon = [];
   @override
   void initState() {
     super.initState();
     widget.network.setHomeProtocol(this);
   }
 
+  //TODO: [POK-1] Pass this to NetworkLayer or other logic handler
   List<Pokemon> randomList =
       List.generate(5, (index) => Pokemon(name: "loading", url: "loading"));
+  void _getPokemon(int offset) {
+    widget.network.getLimited(offset, limit: 100);
+    setState(() => _currentOffset = offset);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      child: HomeComponent(randomList: randomList, pokemon: pokemon),
+      child: HomeComponent(
+        key: _componentKey,
+        randomList: randomList,
+        pokemon: pokemon,
+        setLimit: _getPokemon,
+        currentOffset: _currentOffset,
+      ),
     );
   }
 
   @override
-  List<Pokemon> pokemon = [];
-
-  @override
   getPokemon(List<Pokemon> pokemonList) {
+    var random = Random();
+
     setState(() {
+      pokemon = [];
       pokemon = pokemonList;
     });
-    var random = Random();
+
     setState(() {
       randomList = randomList
           .map((e) => pokemonList[random.nextInt(pokemon.length)])

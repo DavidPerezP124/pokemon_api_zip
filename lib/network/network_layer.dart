@@ -28,32 +28,38 @@ class NetworkService implements HomeDelegate, DetailsDelegate {
     } finally {}
   }
 
-  getLimited(int limit, {int offset = 100}) {
-    _handleHttpCall("?limit=$limit&offset=$offset").then((value) {
-      List<Pokemon> pList = [];
-      List<dynamic> result = value["results"];
-      result.forEach((element) {
-        pList.add(Pokemon.fromJson(element as Map<String, dynamic>));
-      });
-      print(pList);
+  getLimited(int offset, {int limit = 100}) {
+    _handleHttpCall("?offset=$offset&limit=$limit").then((value) {
+      List<Pokemon> pList = _parseResult(value["results"]);
       updateHomeDelegate(pList);
     });
   }
 
+  List<Pokemon> _parseResult(List<dynamic> list) {
+    List<Pokemon> pList = [];
+    list.forEach((element) {
+      pList.add(Pokemon.fromJson(element as Map<String, dynamic>));
+    });
+    return pList;
+  }
+
   //Functions to update Home Screen
+
   @override
   HomeProtocol homeDelegate;
 
   @override
   setHomeProtocol(HomeProtocol delegate) {
     this.homeDelegate = delegate;
-    getLimited(100);
+    getLimited(0);
   }
 
   @override
   updateHomeDelegate(List<Pokemon> pokemonList) {
     homeDelegate.getPokemon(pokemonList);
   }
+
+  //Functions to update Details Screen
 
   @override
   DetailsProtocol detailDelegate;
