@@ -1,3 +1,5 @@
+import 'package:pokemon_api_zip/models/pokemon_details.dart';
+
 class Pokemon {
   final String name;
   final String url;
