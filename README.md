@@ -48,7 +48,6 @@ flutter run
 You need a physical device or emulator.
 Select that device in your IDE before executing `flutter run` command
 
-
 ### Login
 
 Username and Pass word validity are checked with Regex

@@ -27,7 +27,7 @@ class UserStatus with ChangeNotifier {
 
   signedIn(ValueSetter<UserModel> user) {
     _userData.getUserInfo().then((value) {
-      if (value != null) {
+      if (value != null && value.username != '') {
         user(value);
         _status = Status.Authenticated;
         _user = value;
