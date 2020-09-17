@@ -118,40 +118,27 @@ class OnboardingComponentState extends State<OnboardingComponent> {
       Text(value, style: PokeStyles(context: context).whiteText);
 
   List<Widget> get _pages => <Widget>[
-        ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: Center(
-            child: Column(
-              children: [
-                Image.asset("assets/images/pokedeex.png"),
-                Text("Thank you for downloading")
-              ],
-            ),
-          ),
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: Center(
-            child: Column(
-              children: [
-                Image.asset("assets/images/pokedeex.png"),
-                Text(
-                    "Look at all the pokemon, from 1st Gen up to Sword & Shield")
-              ],
-            ),
-          ),
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: Center(
-            child: Column(
-              children: [
-                Image.asset("assets/images/pokedeex.png"),
-                Text(
-                    "This will need a one time sign in, you name can only have letters, numbers, underscores and hyphens")
-              ],
-            ),
-          ),
-        )
+        _pageWidget("Thank you for downloading"),
+        _pageWidget(
+            "Look at all the pokemon, from 1st Gen up to Sword & Shield"),
+        _pageWidget(
+            "This will need a one time sign in, you name can only have letters, numbers, underscores and hyphens"),
       ];
+  Widget _pageWidget(String text) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Image.asset("assets/images/pokedeex.png"),
+              Text(text, style: Theme.of(context).textTheme.bodyText1)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
