@@ -124,13 +124,12 @@ class OnboardingComponentState extends State<OnboardingComponent> {
             child: Column(
               children: [
                 Image.asset("assets/images/pokedeex.png"),
-                Text(
-                    "Look at all the pokemon, from 1st Gen up to Sword & Shield")
+                Text("Thank you for downloading")
               ],
             ),
           ),
         ),
-        new ConstrainedBox(
+        ConstrainedBox(
           constraints: const BoxConstraints.expand(),
           child: Center(
             child: Column(
@@ -138,6 +137,18 @@ class OnboardingComponentState extends State<OnboardingComponent> {
                 Image.asset("assets/images/pokedeex.png"),
                 Text(
                     "Look at all the pokemon, from 1st Gen up to Sword & Shield")
+              ],
+            ),
+          ),
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset("assets/images/pokedeex.png"),
+                Text(
+                    "This will need a one time sign in, you name can only have letters, numbers, underscores and hyphens")
               ],
             ),
           ),
