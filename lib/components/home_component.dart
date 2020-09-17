@@ -27,40 +27,51 @@ class HomeComponent extends StatelessWidget {
           children: [
             Center(
                 child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.2,
                     constraints: BoxConstraints(
                       maxHeight: 300,
-                      minHeight: 250,
+                      minHeight: 100,
                     ),
                     child: Image.asset("assets/images/pokedeex.png"))),
             Center(
-                child: _titleText(context, title: "Random Picks From Below")),
+                child: FittedBox(
+                    child:
+                        _titleText(context, title: "Random Picks From Below"))),
             Center(
               child: Container(
-                height: 100,
-                width: 400,
+                height: 150,
+                width: 550,
                 child: Center(
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: randomList.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          child: InkWell(
-                            onTap: () => _handleTap(context, randomList[index]),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Center(child: Text(randomList[index].name)),
-                                  Center(
-                                      child: Text(randomList[index]
-                                          .url
-                                          .substring(0,
-                                              randomList[index].url.length - 1)
-                                          .split('/')
-                                          .last)),
-                                ],
+                          child: Container(
+                            width: 500 / 5,
+                            child: InkWell(
+                              onTap: () =>
+                                  _handleTap(context, randomList[index]),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Center(child: Text(randomList[index].name)),
+                                    randomList[index].url != "loading"
+                                        ? Image.network(
+                                            _generateUrl(randomList[index].url),
+                                            height: 40)
+                                        : Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                    Center(
+                                        child: Text(
+                                            _getId(randomList[index].url))),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -74,20 +85,26 @@ class HomeComponent extends StatelessWidget {
               constraints: _kWidthBoxConstraints,
               child: Row(
                 children: [
-                  _titleText(context,
-                      title:
-                          "Pokemon List: ${currentOffset + 1} - ${currentOffset + 100}"),
+                  FittedBox(
+                    child: _titleText(context,
+                        title:
+                            "Pokemon List: ${currentOffset + 1} - ${currentOffset + 100}"),
+                  ),
                   Spacer(),
-                  IconButton(
-                      icon: Icon(Icons.arrow_back_ios_rounded),
-                      onPressed: () => currentOffset >= 200
-                          ? setLimit(currentOffset - 100)
-                          : () {}),
-                  IconButton(
-                      icon: Icon(Icons.arrow_forward_ios_rounded),
-                      onPressed: () => currentOffset < 1000
-                          ? setLimit(currentOffset + 100)
-                          : () {}),
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.arrow_back_ios_rounded),
+                          onPressed: () => currentOffset >= 200
+                              ? setLimit(currentOffset - 100)
+                              : () {}),
+                      IconButton(
+                          icon: Icon(Icons.arrow_forward_ios_rounded),
+                          onPressed: () => currentOffset < 1000
+                              ? setLimit(currentOffset + 100)
+                              : () {}),
+                    ],
+                  ),
                 ],
               ),
             )),
@@ -101,11 +118,10 @@ class HomeComponent extends StatelessWidget {
                           constraints: _kWidthBoxConstraints,
                           child: Card(
                             child: ListTile(
-                              trailing: Text(pokemon[index]
-                                  .url
-                                  .substring(0, pokemon[index].url.length - 1)
-                                  .split('/')
-                                  .last),
+                              isThreeLine: true,
+                              subtitle: Text(_getId(pokemon[index].url)),
+                              trailing: Image.network(
+                                  _generateUrl(pokemon[index].url)),
                               leading: Text(pokemon[index].name),
                               onTap: () => _handleTap(context, pokemon[index]),
                             ),
@@ -119,6 +135,18 @@ class HomeComponent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getId(String str) {
+    if (str == "loading") {
+      return "";
+    }
+    return str.substring(0, str.length - 1).split('/').last;
+  }
+
+  String _generateUrl(String str) {
+    String pokemonId = _getId(str);
+    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png";
   }
 
   _handleTap(BuildContext context, Pokemon pokemon) {
@@ -135,6 +163,6 @@ class HomeComponent extends StatelessWidget {
         maxWidth: 600,
       );
   Text _titleText(BuildContext context, {String title}) {
-    return Text(title, style: Theme.of(context).textTheme.headline4);
+    return Text(title, style: Theme.of(context).textTheme.headline6);
   }
 }
