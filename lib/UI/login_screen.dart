@@ -13,12 +13,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Child will be inside a SafeArea.Scaffold.body
     return Consumer<user.UserStatus>(
       builder: (context, data, child) {
+        data.signedIn((value) {
+          print(value.username);
+        });
+
         if (data.status == user.Status.Authenticated) {
-          return HomeScreen();
+          print(data.status);
+          return HomeScreen(data: data);
         }
+
         return BaseScreen(
             child: Stack(
           children: [

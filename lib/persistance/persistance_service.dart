@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:pokemon_api_zip/models/userModel.dart';
 import 'package:pokemon_api_zip/protocols/onboarding_data_protocol.dart';
+import 'package:pokemon_api_zip/protocols/testing_protocols.dart';
 import 'package:pokemon_api_zip/protocols/user_data_protocol.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PersistData implements UserData, OnboardingData {
+class PersistData implements UserData, OnboardingData, TestingService {
   PersistData();
   static SharedPreferences _preferences;
 
@@ -41,8 +42,21 @@ class PersistData implements UserData, OnboardingData {
 
   UserModel _getUserInfo() {
     String map = _preferences.getString("user");
-    var decoded = jsonDecode(map);
-    return UserModel.fromJson(decoded);
+    var value = _makeMap(map);
+    if (value == null) {
+      return null;
+    }
+    return UserModel.fromJson(value);
+  }
+
+  Map<String, String> _makeMap(String map) {
+    Map<String, String> nMap = {};
+    if (map == null) {
+      return null;
+    }
+    print(map);
+    map.split(',').map((e) => nMap[e.split(":")[0]] = e.split(":")[1]);
+    return nMap;
   }
 
   //MARK: Onboarding
@@ -56,4 +70,30 @@ class PersistData implements UserData, OnboardingData {
       await _useService(function: _getOnboarding) as bool;
 
   bool _getOnboarding() => _preferences.getBool("onboarded");
+
+// Functions for testing
+  @override
+  UserModel testDeserialization(dynamic data) {
+    if (data is String) {
+      var value = _makeMap(data);
+      if (value == null) return null;
+      return UserModel.fromJson(value);
+    }
+    return UserModel.fromJson(data);
+  }
+
+  @override
+  Future<UserModel> testRetrievingUser() async {
+    SharedPreferences.setMockInitialValues({
+      "flutter.user": "{username':'testName','password':'testPass'}",
+      "flutter.onboarded": true
+    });
+    var _prefs = await SharedPreferences.getInstance();
+    String map = _prefs.getString("user");
+    var value = _makeMap(map);
+    return UserModel.fromJson(value);
+  }
+
+  @override
+  Map<String, String> testSerialization(dynamic data) {}
 }
